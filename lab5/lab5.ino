@@ -1,5 +1,9 @@
 int input;
-bool receivedInput = false;
+int receivedInput = 0;
+// 0 if waiting for first input,
+// 1 if wating for second input,
+// 2 if running motors
+
 unsigned long startTime;
 
 #define MOTOR1PWM 5
@@ -37,28 +41,41 @@ void setup() {
 
 
 void loop() {
-  if (receivedInput == false) { // Take input from user
+  if (receivedInput == 0) { // Waiting for first input from user
     if (Serial.available() > 0) {
       input = (Serial.readString()).toInt();
 
-      if (0 <= input <= 255) Serial.println("Enter a valid integer between 0 and 255.");
+      if (input < 0 || input > 255) Serial.println("Enter a valid integer between 0 and 255.");
       else {
-        Serial.println("Running motors!");
-        receivedInput = true;
-        
-        digitalWrite(MOTOR1BRK, LOW);
-        digitalWrite(MOROR2BRK, LOW);
-        
-        analogWrite(MOTOR1PWM, input);
-        analogWrite(MOTOR2PWM, input);
-        startTime = millis();
+        receivedInput = 1;
+        Serial.println("How long do you want to run the motor for?");
+      }
+
+      
+    } else if (receivedInput == 1) { // Waiting for second input
+      if (Serial.available() > 0) {
+        input = (Serial.readString()).toInt();
+
+        if (input < 1 || input > 30) Serial.println("Enter a valid integer between 1 and 30.");
+        else {
+          receivedInput = 2;
+          Serial.println("Running motors!");
+          
+          digitalWrite(MOTOR1BRK, LOW);
+          digitalWrite(MOROR2BRK, LOW);
+          
+          analogWrite(MOTOR1PWM, input);
+          analogWrite(MOTOR2PWM, input);
+          
+          startTime = millis();
+        }
       }
     }
     
-  } else { // Run motor for 10 seconds
-    if (millis() > startTime + 10000) { // 10 seconds has passed
-      recievedInput = false;
-      Serial.println("Enter a new motor speed!");
+  } else { // Run motors
+    if (millis() > startTime + input * 1000) { // Motors have been running for specified amount of time
+      recievedInput = 0;
+      Serial.println("Enter a motor speed!");
         
       analogWrite(MOTOR1PWM, 0);
       analogWrite(MOTOR2PWM, 0);
