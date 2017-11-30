@@ -1,4 +1,5 @@
-int motorSpeed, runTime;
+int motorSpeed;
+unsigned long endTime;
 int receivedInput = 0;
 // 0 if waiting for first input,
 // 1 if wating for second input,
@@ -60,7 +61,6 @@ void loop() {
 
       if (input < 1 || input > 30) Serial.println("Enter a valid integer between 1 and 30.");
       else {
-        runTime = input;
         receivedInput = 2;
         Serial.println("Running motors!");
           
@@ -70,11 +70,11 @@ void loop() {
         analogWrite(MOTOR1PWM, motorSpeed);
         analogWrite(MOTOR2PWM, motorSpeed);
           
-        startTime = millis();
+        endTime = millis() + input * 1000;
       }
     }
   } else { // Run motors
-    if (millis() > startTime + runTime * 1000) { // Motors have been running for specified amount of time
+    if (millis() > endTime) { // Motors have been running for specified amount of time
       receivedInput = 0;
       Serial.println("Enter a motor speed!");
         
