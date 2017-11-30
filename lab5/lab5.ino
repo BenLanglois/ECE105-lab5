@@ -6,14 +6,14 @@ int receivedInput = 0;
 
 unsigned long startTime;
 
-#define MOTOR1PWM 5
-#define MOTOR1DIR 7
-#define MOTOR1BRK 12
+#define MOTOR1PWM 3
+#define MOTOR1DIR 12
+#define MOTOR1BRK 9
 
 
-#define MOTOR2PWM 6
-#define MOTOR2DIR 8
-#define MOTOR2BRK 13
+#define MOTOR2PWM 11
+#define MOTOR2DIR 13
+#define MOTOR2BRK 8
 
 
 void setup() {
