@@ -13,7 +13,7 @@ unsigned long startTime;
 
 #define MOTOR2PWM 6
 #define MOTOR2DIR 8
-#define MOTOR1BRK 13
+#define MOTOR2BRK 13
 
 
 void setup() {
@@ -29,11 +29,11 @@ void setup() {
 
 
   digitalWrite(MOTOR1DIR, HIGH);
-  digitalWrite(MOROR2DIR, HIGH);
+  digitalWrite(MOTOR2DIR, HIGH);
   digitalWrite(MOTOR1BRK, HIGH);
-  digitalWrite(MOROR2BRK, HIGH);
+  digitalWrite(MOTOR2BRK, HIGH);
   digitalWrite(MOTOR1PWM, 0);
-  digitalWrite(MOROR2PWM, 0);
+  digitalWrite(MOTOR2PWM, 0);
 
   
   Serial.println("Enter a motor speed!");
@@ -64,7 +64,7 @@ void loop() {
           Serial.println("Running motors!");
           
           digitalWrite(MOTOR1BRK, LOW);
-          digitalWrite(MOROR2BRK, LOW);
+          digitalWrite(MOTOR2BRK, LOW);
           
           analogWrite(MOTOR1PWM, motorSpeed);
           analogWrite(MOTOR2PWM, motorSpeed);
@@ -76,14 +76,14 @@ void loop() {
     
   } else { // Run motors
     if (millis() > startTime + runTime * 1000) { // Motors have been running for specified amount of time
-      recievedInput = 0;
+      receivedInput = 0;
       Serial.println("Enter a motor speed!");
         
       analogWrite(MOTOR1PWM, 0);
       analogWrite(MOTOR2PWM, 0);
       
       digitalWrite(MOTOR1BRK, HIGH);
-      digitalWrite(MOROR2BRK, HIGH);
+      digitalWrite(MOTOR2BRK, HIGH);
     }
   }
 }
