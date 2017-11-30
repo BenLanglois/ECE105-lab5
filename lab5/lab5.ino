@@ -53,27 +53,26 @@ void loop() {
       }
 
       
-    } else if (receivedInput == 1) { // Waiting for second input
-      if (Serial.available() > 0) {
-        int input = (Serial.readString()).toInt();
+    }
+  } else if (receivedInput == 1) { // Waiting for second input
+    if (Serial.available() > 0) {
+      int input = (Serial.readString()).toInt();
 
-        if (input < 1 || input > 30) Serial.println("Enter a valid integer between 1 and 30.");
-        else {
-          runTime = input;
-          receivedInput = 2;
-          Serial.println("Running motors!");
+      if (input < 1 || input > 30) Serial.println("Enter a valid integer between 1 and 30.");
+      else {
+        runTime = input;
+        receivedInput = 2;
+        Serial.println("Running motors!");
           
-          digitalWrite(MOTOR1BRK, LOW);
-          digitalWrite(MOTOR2BRK, LOW);
+        digitalWrite(MOTOR1BRK, LOW);
+        digitalWrite(MOTOR2BRK, LOW);
           
-          analogWrite(MOTOR1PWM, motorSpeed);
-          analogWrite(MOTOR2PWM, motorSpeed);
+        analogWrite(MOTOR1PWM, motorSpeed);
+        analogWrite(MOTOR2PWM, motorSpeed);
           
-          startTime = millis();
-        }
+        startTime = millis();
       }
     }
-    
   } else { // Run motors
     if (millis() > startTime + runTime * 1000) { // Motors have been running for specified amount of time
       receivedInput = 0;
