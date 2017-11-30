@@ -28,7 +28,7 @@ void setup() {
   pinMode(MOTOR2BRK, OUTPUT);
 
 
-  digitalWrite(MOTOR1DIR, HIGH);
+  digitalWrite(MOTOR1DIR, LOW);
   digitalWrite(MOTOR2DIR, HIGH);
   digitalWrite(MOTOR1BRK, HIGH);
   digitalWrite(MOTOR2BRK, HIGH);
